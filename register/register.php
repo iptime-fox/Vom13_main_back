@@ -62,10 +62,39 @@
     }
 
     // 로그인 함수
-    public function login(){}
+    public function login(){
+      $sql = "SELECT * FROM ".$this->table." WHERE user_id=:id";
+      $stmt = $this->conn->prepare($sql);
+
+      $this->id = htmlspecialchars($this->id);
+      $stmt->bindParam(":id", $this->id);
+    
+      $stmt->execute();
+      $result = $stmt->rowCount(); // 조회된 결과 숫자로 리턴
+     
+      if(!$result){ // result에 값이 없다면
+        return 0;
+      } else{
+        $row = $stmt->fetch();
+        $pwd = $row['user_pwd'];
+        $pwd_verify = password_verify($this->pwd, $pwd);
+        if(!$pwd_verify){
+          return 1;
+        } else{
+          return $row;
+        }
+      }
+    }
 
     // 로그아웃 함수
-    public function logout(){}
+    public function logout(){
+      session_start();
+      if(isset($_SESSION['userid'])){ // isset : 값의 존재 여부(boolean)
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
 
 ?>
