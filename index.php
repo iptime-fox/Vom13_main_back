@@ -7,7 +7,7 @@
   $path_name = explode('/', $_SERVER['REQUEST_URI']);
   // print_r($path_name);
   // print_r($path_name[2]);
-  $inc_adrs_post = ['signup', 'signin']; // post로 저달되는 주소
+  $inc_adrs_post = ['signup', 'signin', 'is_signin']; // post로 저달되는 주소
   $inc_adrs_get = ['signout']; // get으로 전달되는 주소
 
   for($i = 0; $i < count($inc_adrs_post); $i++){
