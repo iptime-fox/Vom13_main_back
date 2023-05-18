@@ -12,6 +12,7 @@
     public $email;
     public $pwd;
     public $lvl;
+    public $token;
     // public은 외부 접근을 허용한다.
 
     // 생성자 : class가 실행되면 가장 먼저 실행되는 함수
@@ -34,7 +35,7 @@
     // 회원정보 입력 함수
     public function insert_user(){
       // referrenc : https://wickedmagica.tistory.com/16
-      $sql = "INSERT INTO ".$this->table." SET user_id=:id, user_name=:name, user_email=:email, user_pwd=:pwd, user_lvl=:lvl";
+      $sql = "INSERT INTO ".$this->table." SET user_id=:id, user_name=:name, user_email=:email, user_pwd=:pwd, user_lvl=:lvl, user_token=:token";
       $stmt = $this->conn->prepare($sql);
 
       $this->id     = htmlspecialchars($this->id);
@@ -44,12 +45,14 @@
       $this->pwd    = htmlspecialchars($this->pwd);
       $this->pwd    = password_hash ( $this->pwd , PASSWORD_DEFAULT);
       $this->lvl    = 9;
+      $this->token  = sha1(time());
 
       $stmt->bindParam(":id",     $this->id);
       $stmt->bindParam(":name",   $this->name);
       $stmt->bindParam(":email",  $this->email);
       $stmt->bindParam(":pwd",    $this->pwd);
       $stmt->bindParam(":lvl",    $this->lvl);
+      $stmt->bindParam(":token",  $this->token);
       
       
       return $stmt->execute() ? true : false;
@@ -63,15 +66,29 @@
 
     // 로그인 함수
     public function login(){
+      /* ========= 로그인 데이터 조회 시작 ========= */
       $sql = "SELECT * FROM ".$this->table." WHERE user_id=:id";
       $stmt = $this->conn->prepare($sql);
 
-      $this->id = htmlspecialchars($this->id);
       $stmt->bindParam(":id", $this->id);
     
       $stmt->execute();
       $result = $stmt->rowCount(); // 조회된 결과 숫자로 리턴
+      /* ========= 로그인 데이터 조회 끝 ========= */
      
+      /* ========= 토큰 데이터 업데이트 시작 ========= */
+      $this->token = sha1(time());
+
+      $sql1 = "UPDATE ". $this->table ." SET user_token=:token WHERE user_id=:id";
+      $stmt1 = $this->conn->prepare($sql1);
+
+      $stmt1->bindParam(":id",    $this->id);
+      $stmt1->bindParam(":token", $this->token);
+    
+      $stmt1->execute();
+      /* ========= 토큰 데이터 업데이트 끝 ========= */
+
+
       if(!$result){ // result에 값이 없다면
         return 0;
       } else{
@@ -95,6 +112,8 @@
         return false;
       }
     }
+
+
   }
 
 ?>

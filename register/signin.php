@@ -27,11 +27,12 @@
     $login_ok = $signin->login();
     // print_r($login_ok);
     session_start(); // 세션을 생성하기 위해 반드시 선언되어야 하는 함수
-    $_SESSION['useridx'] = $login_ok['user_idx'];
-    $_SESSION['userid'] = $login_ok['user_id'];
-    $_SESSION['userlvl'] = $login_ok['user_lvl'];
+    $_SESSION['useridx']    = $login_ok['user_idx'];
+    $_SESSION['userid']     = $login_ok['user_id'];
+    $_SESSION['userlvl']    = $login_ok['user_lvl'];
+    $_SESSION['usertoken']  = $login_ok['user_token'];
 
-    $msg = array("useridx" => $_SESSION['useridx'], "userid" => $_SESSION['userid'], "userlvl" => $_SESSION['userlvl']);
+    $msg = array("useridx" => $_SESSION['useridx'], "userid" => $_SESSION['userid'], "userlvl" => $_SESSION['userlvl'], "usertoken" => $_SESSION['usertoken']);
   }
 
 
