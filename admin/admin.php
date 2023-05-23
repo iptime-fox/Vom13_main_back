@@ -6,6 +6,9 @@
 
     public $lvl;
     public $token;
+    public $idx;
+    public $name;
+
 
     public function __construct($db){
       $this->conn = $db;
@@ -38,19 +41,10 @@
         $this->lvl = htmlspecialchars(strip_tags($lvl));
         $this->token = htmlspecialchars(strip_tags($token));
 
-
-        // echo $this->token;
-        // echo '------';
-        // echo $this->lvl;
-        // exit;
-
-
         $stmt->bindParam(":lvl", $this->lvl);
         $stmt->bindParam(":token", $this->token);
         $stmt->execute();
 
-
-        // print_r($stmt->execute());
         $num = $stmt->rowCount();
 
 
@@ -66,6 +60,40 @@
       }
 
     }
+
+    public function update_user(){
+      $sql = "UPDATE ". $this->table ." SET user_name=:name, user_lvl=:lvl WHERE user_idx=:idx";
+      $stmt = $this->conn->prepare($sql);
+
+      $this->idx    = htmlspecialchars($this->idx);
+      $this->name   = htmlspecialchars($this->name);
+      $this->lvl    = htmlspecialchars($this->lvl);
+
+      $stmt->bindParam(":idx",   $this->idx);
+      $stmt->bindParam(":name",  $this->name);
+      $stmt->bindParam(":lvl",   $this->lvl);
+      
+      if($stmt->execute()){
+        return true;
+      } 
+    }
+
+    public function delete_user(){
+      $sql = "DELETE FROM ". $this->table ." WHERE user_idx=:idx";
+      $stmt = $this->conn->prepare($sql);
+
+      $this->idx = htmlspecialchars($this->idx);
+      $stmt->bindParam(":idx", $this->idx);
+      $stmt->execute();
+
+      if($stmt->execute()){
+        return true;
+      } else{
+        return false;
+      }
+    }
+
+
   }
 
 ?>
