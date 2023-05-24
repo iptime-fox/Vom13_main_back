@@ -82,6 +82,8 @@
       $sql = "DELETE FROM ". $this->table ." WHERE user_idx=:idx";
       $stmt = $this->conn->prepare($sql);
 
+      
+
       $this->idx = htmlspecialchars($this->idx);
       $stmt->bindParam(":idx", $this->idx);
       $stmt->execute();
