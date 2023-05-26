@@ -1,11 +1,21 @@
 <?php
 
 
-  $path_name = explode('/', $_SERVER['REQUEST_URI']);
+  // $path_name = explode('/', $_SERVER['REQUEST_URI']);
+
+  $path_name = '';
+
+  if(strpos($_SERVER['REQUEST_URI'], '?')){
+    $front_path = explode('?', $_SERVER['REQUEST_URI'])[0];
+    $path_name = explode('/', $front_path);
+  } else {
+    $path_name = explode('/', $_SERVER['REQUEST_URI']);
+  }
+
 
   $inc_path = ['register', 'admin', 'product'];
   $inc_adrs_post = ['signup', 'signin', 'is_signin', 'insert_product']; // post로 저달되는 주소
-  $inc_adrs_get = ['signout', 'check_admin_signin', 'get_users']; // get으로 전달되는 주소
+  $inc_adrs_get = ['signout', 'check_admin_signin', 'get_users', 'get_products']; // get으로 전달되는 주소
   $inc_adrs_put = ['update_user'];
   $inc_adrs_delete = ['delete_user'];
 

@@ -27,10 +27,10 @@
 
   // 테이블 이동 분개
   if($_POST['pr_type'] == 'picture'){
-    $upload_dir = 'upload_pp_img';
+    $upload_dir = 'bx_pp';
   } else {
 
-    $upload_dir = 'upload_dp_img';
+    $upload_dir = 'bx_dp';
   }
 
   // 이미지 파일 처리
