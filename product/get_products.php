@@ -28,9 +28,32 @@
     } else {
       $get_products->pr_ID = '';
     }
+    $stmt = $get_products->get_products();
+    $item_num = $stmt->rowCount();
+    $pr_arr = [];
+
+    if($item_num == 0){
+      $msg = ['msg' => '조회 결과가 없습니다.'];
+    } else {
+      while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        extract($row);
+        $pr_info = [
+          'pr_img'    => $row['bx_img'],
+          'pr_ttl'    => $row['bx_ttl'],
+          'pr_wt_en'  => $row['bx_wt_en'],
+          'pr_wt_kr'  => $row['bx_wt_kr'],
+          'pr_pri'    => $row['bx_pri'],
+          'pr_desc'   => $row['bx_desc'],
+          'pr_reg'    => $row['bx_reg'],
+          'pr_ID'     => $row['bx_ID'],
+          'pr_hit'    => $row['bx_hit']
+        ];
+        array_push($pr_arr, $pr_info);
+      }
+      $msg = $pr_arr;
+    }
   }
 
-  $get_products->get_products();
   
   echo json_encode($msg);
 
