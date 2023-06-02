@@ -31,7 +31,7 @@
         $this->table = 'bx_dp';
       }
 
-      $sql = "INSERT INTO ".$this->table." SET bx_img=:pr_img, bx_ttl=:pr_ttl, bx_wt_en=:pr_wt_en, bx_wt_kr=:pr_wt_kr, bx_pri=:pr_pri, bx_desc=:pr_desc, bx_reg =:pr_reg, bx_ID=:pr_ID, bx_hit=:pr_hit";
+      $sql = "INSERT INTO ".$this->table." SET bx_img=:pr_img, bx_ttl=:pr_ttl, bx_wt_en=:pr_wt_en, bx_wt_kr=:pr_wt_kr, bx_pri=:pr_pri, bx_desc=:pr_desc, bx_reg =:pr_reg, bx_ID=:pr_ID, bx_hit=:pr_hit, bx_type=:pr_type";
 
       $stmt = $this->conn->prepare($sql);
 
@@ -56,6 +56,7 @@
       $stmt->bindParam(':pr_reg',   $this->pr_reg);
       $stmt->bindParam(':pr_ID',    $this->pr_ID);
       $stmt->bindParam(':pr_hit',   $this->pr_hit);
+      $stmt->bindParam(':pr_type',  $this->table);
 
       $result = $stmt->execute();
 
@@ -71,6 +72,8 @@
       } else{
         $table = "bx_".$this->cate;
       }
+
+      
     
       if($this->sort =='new'){
         $orderBy = " ORDER BY bx_idx DESC";
@@ -101,39 +104,8 @@
       $stmt->execute();
     
       return $stmt;
-    
 
 
-      // if($this->cate == 'all'){ // 테이블이 모두 선택될때
-      //   if($this->sort == 'new'){
-      //     $sql = "SELECT * FROM (SELECT * FROM bx_pp UNION SELECT * FROM bx_dp) AS union_table".$this->pr_ID." ORDER BY bx_idx DESC".$this->limit;
-      //   } else if($this->sort == 'best'){
-      //     $sql = "SELECT * FROM (SELECT * FROM bx_pp UNION SELECT * FROM bx_dp) AS union_table".$this->pr_ID." ORDER BY bx_hit DESC".$this->limit;
-      //   } else {
-      //     $sql = "SELECT * FROM (SELECT * FROM bx_pp UNION SELECT * FROM bx_dp) AS union_table".$this->pr_ID.$this->limit;
-      //     // 서브쿼리 : union은 컬럼명과 갯수가 같아야 한다.
-      //   }
-      //   // echo $sql1;
-      // } else { // 지정된 테이블만 조회될때
-      //   if($this->sort == 'new'){  
-      //     $sql = "SELECT * FROM bx_".$this->cate.$this->pr_ID." ORDER BY bx_idx DESC".$this->limit;
-      //   } else if($this->sort == 'best'){
-      //     $sql = "SELECT * FROM bx_".$this->cate.$this->pr_ID." ORDER BY bx_hit DESC".$this->limit;
-      //   } else {
-      //     $sql = "SELECT * FROM bx_".$this->cate.$this->pr_ID.$this->limit;
-      //   }
-
-      //   if($this->limit == '' && !$this->pr_ID == ''){ // limit가 없거나, 아이디가 있을경우 조회수 증가 -> 특정 상품을 지정하여 검색될때만 조회수 증가
-      //     $sql1 = "UPDATE bx_".$this->cate. " SET bx_hit=bx_hit+1".$this->pr_ID;
-      //     $stmt1 = $this->conn->prepare($sql1);
-      //     $stmt1->execute();
-      //    }
-      // }
-
-      // $stmt = $this->conn->prepare($sql);
-      // $stmt->execute();
-
-      // return $stmt;
     }
   }
 

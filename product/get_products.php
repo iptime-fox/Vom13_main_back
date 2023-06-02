@@ -46,7 +46,11 @@
           'pr_desc'   => $row['bx_desc'],
           'pr_reg'    => $row['bx_reg'],
           'pr_ID'     => $row['bx_ID'],
-          'pr_hit'    => $row['bx_hit']
+          'pr_hit'    => $row['bx_hit'],
+          'pr_type'   => $row['bx_type'] 
+          // 테이블 타입을 구분하게 되면 테이블을 나누는 의미가 사라짐. 따라서 한 테이블에 타입별로 입력하면 됨.
+          // 하지만 UNION 구문(clause)를 사용해 본다는 데 의미를 둠
+          // 실무적으로는 사진과 설명, 부가 설명 등의 테이블을 별도로 만들어 JOIN을 이용해 데이터를 사용함. 이럴 경우 속도가 향상되는 효과가 있음.
         ];
         array_push($pr_arr, $pr_info);
       }
