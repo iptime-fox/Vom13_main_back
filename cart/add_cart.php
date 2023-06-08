@@ -28,9 +28,11 @@
         "cart_ttl"    => $data->cart_ttl,
         "cart_wt_kr"  => $data->cart_wt_kr,
         "cart_pri"    => $data->cart_pri,
-        "cart_count"  => $data->cart_count
+        "cart_count"  => $data->cart_count,
+        "cart_type"  => $data->cart_type,
+        "cart_size"  => $data->cart_size
       );
-      $msg = ['msg' => '카트에 상품이 추가되었습니다.'];
+      $msg = ['msg' => '장바구니에 상품이 추가되었습니다.'];
     }
   } else {
     // 세션이 하나도 없을 때 첫 세션 생성
@@ -40,9 +42,11 @@
       "cart_ttl"    => $data->cart_ttl,
       "cart_wt_kr"  => $data->cart_wt_kr,
       "cart_pri"    => $data->cart_pri,
-      "cart_count"  => $data->cart_count
+      "cart_count"  => $data->cart_count,
+      "cart_type"  => $data->cart_type,
+      "cart_size"  => $data->cart_size
     );
-    $msg = ['msg' => '카트에 상품이 추가되었습니다.'];
+    $msg = ['msg' => '장바구니에 상품이 추가되었습니다.'];
   }
 
 
