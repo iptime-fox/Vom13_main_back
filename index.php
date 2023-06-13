@@ -15,8 +15,8 @@
 
   $inc_path = ['register', 'admin', 'product', 'cart', 'comment'];
   $inc_adrs_post = ['signup', 'signin', 'is_signin', 'insert_product', 'add_cart', 'insert_cmt']; // post로 저달되는 주소
-  $inc_adrs_get = ['signout', 'check_admin_signin', 'get_users', 'get_products', 'get_cart']; // get으로 전달되는 주소
-  $inc_adrs_put = ['update_user'];
+  $inc_adrs_get = ['signout', 'check_admin_signin', 'get_users', 'get_products', 'get_cart', 'get_cmt']; // get으로 전달되는 주소
+  $inc_adrs_put = ['update_user', 'update_cmt'];
   $inc_adrs_delete = ['delete_user', 'del_cart'];
 
   // post path
