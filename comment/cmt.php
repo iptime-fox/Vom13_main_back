@@ -9,6 +9,7 @@
     public $cmt_cont;
     public $cmt_star;
     public $cmt_reg;
+    public $cmt_idx;
 
     public function __construct($db){
       $this->conn = $db;
@@ -73,7 +74,32 @@
     }
 
     public function update_comment(){
-      
+      $sql = "UPDATE ".$this->table." SET bx_cmt_cont=:cmt_cont, bx_cmt_star=:cmt_star WHERE bx_cmt_idx=:cmt_idx"; 
+
+      $stmt = $this->conn->prepare($sql);
+
+      $this->cmt_idx  = htmlspecialchars($this->cmt_idx);
+      $this->cmt_cont = htmlspecialchars($this->cmt_cont);
+      $this->cmt_star = htmlspecialchars($this->cmt_star);
+
+      $stmt->bindParam(':cmt_idx',  $this->cmt_idx);
+      $stmt->bindParam(':cmt_cont',  $this->cmt_cont);
+      $stmt->bindParam(':cmt_star',  $this->cmt_star);
+
+      return $stmt->execute() ? true : false;
+    }
+
+    public function delete_comment(){
+      $sql = "DELETE FROM ".$this->table." WHERE bx_cmt_idx=:cmt_idx"; 
+
+      $stmt = $this->conn->prepare($sql);
+
+      $this->cmt_idx  = htmlspecialchars($this->cmt_idx);
+
+      $stmt->bindParam(':cmt_idx',  $this->cmt_idx);
+      $stmt->execute();
+
+      return $stmt->execute() ? true : false;
     }
   }
 
